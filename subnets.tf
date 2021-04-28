@@ -79,7 +79,6 @@ resource "aws_route_table_association" "default" {
 }
 
 resource "aws_network_acl" "public" {
-  count = var.network_acl_id == "" ? 1 : 0
 
   vpc_id     = var.vpc_id
   subnet_ids = aws_subnet.default.*.id
