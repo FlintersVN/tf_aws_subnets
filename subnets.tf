@@ -43,27 +43,27 @@ resource "aws_route_table" "default" {
 
 resource "aws_route" "nat_gateway" {
 
-  count                  = var.nat_gateway_id != "" ? local.number_subnets : 0
+  count                  = var.nat_gateway_ids != [] ? local.number_subnets : 0
   route_table_id         = element(aws_route_table.default.*.id, count.index)
-  nat_gateway_id         = element(var.nat_gateway_id, count.index)
+  nat_gateway_id         = element(var.nat_gateway_ids, count.index)
   destination_cidr_block = "0.0.0.0/0"
   depends_on             = [aws_route_table.default]
 }
 
 resource "aws_route" "nat_instance" {
 
-  count                  = var.instance_id != "" ? local.number_subnets : 0
+  count                  = var.instance_ids != [] ? local.number_subnets : 0
   route_table_id         = element(aws_route_table.default.*.id, count.index)
-  instance_id            = element(var.instance_id, count.index)
+  instance_id            = element(var.instance_ids, count.index)
   destination_cidr_block = "0.0.0.0/0"
   depends_on             = [aws_route_table.default]
 }
 
 resource "aws_route" "gateway_id" {
 
-  count                  = var.gateway_id != "" ? local.number_subnets : 0
+  count                  = var.gateway_ids != [] ? local.number_subnets : 0
   route_table_id         = element(aws_route_table.default.*.id, count.index)
-  gateway_id             = element(var.gateway_id, count.index)
+  gateway_id             = element(var.gateway_ids, count.index)
   destination_cidr_block = "0.0.0.0/0"
   depends_on             = [aws_route_table.default]
 
